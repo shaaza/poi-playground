@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AddressBar from '../../components/AddressBar/'
+import fetchResults from '../../client/Fetch/'
 import './index.css'
 
 class Search extends Component {
@@ -7,8 +8,17 @@ class Search extends Component {
     super(props)
     this.state = {
       title: props.title,
-      url: ""
+      url: "",
+      results: false
     } 
+  }
+  
+  receiverFunc = (results) => {
+    this.setState({results})
+  }
+
+  fetchResults = (event) => {
+    fetchResults(this.state.url, this.receiverFunc)
   }
 
   handleURLChange = (event) => {
@@ -24,8 +34,12 @@ class Search extends Component {
         <div>
           <AddressBar url={this.state.url} onChange={this.handleURLChange} />
         </div>
+        <div>
+          <button onClick={this.fetchResults}>Submit</button>
+        </div>
         <p>
-          Search results
+
+          {this.state.results ? this.state.results.map((i) => (i.name)).join(','): "Nothing"}
         </p>
       </div>
     );
