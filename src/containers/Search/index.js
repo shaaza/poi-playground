@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import AddressBar from '../../components/AddressBar/'
 import fetchResults from '../../client/Fetch/'
+import SearchResultList from '../../components/SearchResultList'
+
 import './index.css'
 
 class Search extends Component {
@@ -37,10 +39,9 @@ class Search extends Component {
         <div>
           <button onClick={this.fetchResults}>Submit</button>
         </div>
-        <p>
-
-          {this.state.results ? this.state.results.map((i) => (i.name)).join(','): "Nothing"}
-        </p>
+        <div>
+          <SearchResultList locations={this.state.results} />
+        </div>
       </div>
     );
   }
