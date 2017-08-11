@@ -8,8 +8,8 @@ class App extends Component {
   render() {
     return (
       <div className="app-panel">
-        <Search />
-        <Search />
+        <Search title="Foursquare" />
+        <Search title="Google Maps" />
       </div>
     );
   }
