@@ -9,7 +9,7 @@ function SearchResultList(props) {
         ))
     }
     else { 
-        list = "nothing" 
+        list = "No results." 
     }
 
     return (
