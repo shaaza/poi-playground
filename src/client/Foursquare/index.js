@@ -1,6 +1,7 @@
   import 'whatwg-fetch'
 
-function fetchFourSquareResults(url, receiverFunc) {
+function fetchFourSquareResults({ baseUrl }, receiverFunc) {
+    let url = baseUrl;
     fetch(url)
                 .then((response) => (response.json()))
                 .then((json) => { 

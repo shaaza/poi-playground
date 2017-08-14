@@ -4,7 +4,7 @@ import './index.css'
 function AddressBar(props) {
     return (
       <div className="address-bar">
-        <label>URL: </label>
+        <label>Base URL: </label>
         <input type="text" value={props.url} onChange={props.onChange}></input>
       </div>
     );

@@ -3,6 +3,7 @@ import AddressBar from '../../components/AddressBar/'
 import fetchResults from '../../client/Fetch/'
 import SearchResultList from '../../components/SearchResultList'
 
+
 import './index.css'
 
 class Search extends Component {
@@ -10,7 +11,7 @@ class Search extends Component {
     super(props)
     this.state = {
       title: props.title,
-      url: "",
+      baseUrl: "",
       results: false
     } 
   }
@@ -20,11 +21,14 @@ class Search extends Component {
   }
 
   fetchResults = (event) => {
-    fetchResults(this.state.url, this.receiverFunc)
+    let queryDetails = {
+      baseUrl: this.state.baseUrl
+    }
+    fetchResults(queryDetails, this.receiverFunc)
   }
 
   handleURLChange = (event) => {
-    this.setState({url: event.target.value});
+    this.setState({baseUrl: event.target.value});
   }
 
   render() {
@@ -34,7 +38,7 @@ class Search extends Component {
           <h3>{this.state.title}</h3>
         </div>
         <div>
-          <AddressBar url={this.state.url} onChange={this.handleURLChange} />
+          <AddressBar url={this.state.baseUrl} onChange={this.handleURLChange} />
         </div>
         <div>
           <button onClick={this.fetchResults}>Submit</button>

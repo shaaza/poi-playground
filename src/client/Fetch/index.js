@@ -1,12 +1,12 @@
 import fetchFourSquareResults from '../Foursquare/index.js'
 import fetchGoogleResults from '../Google/index.js'
 
-function fetchResults (url, receiverFunc) {
+function fetchResults (queryDetails, receiverFunc) {
     switch (true) {
-        case url.includes("foursquare"):
-            return fetchFourSquareResults(url, receiverFunc);
-        case url.includes("google"):
-            return fetchGoogleResults(url, receiverFunc)
+        case queryDetails['baseUrl'].includes("foursquare"):
+            return fetchFourSquareResults(queryDetails, receiverFunc);
+        case queryDetails['baseUrl'].includes("google"):
+            return fetchGoogleResults(queryDetails, receiverFunc)
         default:
             return null;
     }

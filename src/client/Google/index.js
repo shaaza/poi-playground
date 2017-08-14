@@ -5,8 +5,8 @@ var acService = new window.google.maps.places.AutocompleteService();
 var placesService = new window.google.maps.places.PlacesService(getOrCreateDummyMapDOMElement('dummyGoogleMap'));
 
 
-function fetchGoogleResults(url, receiverFunc) {
-
+function fetchGoogleResults({ baseUrl }, receiverFunc) {
+    let url = baseUrl;
     function getDetailsAndCallReceiver(predictions, status) {
         if (status !== window.google.maps.places.PlacesServiceStatus.OK) { 
             alert(status); 
