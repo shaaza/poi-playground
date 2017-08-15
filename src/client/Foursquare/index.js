@@ -14,11 +14,13 @@ function fetchFourSquareResults({ baseUrl, query, latLng, radius, limit }, recei
     fetch(url)
         .then((response) => (response.json()))
         .then((json) => { 
+            console.log(json['response']['venues'])
             let locations = json['response']['venues'].map((i) => (
                 {   
                     name: i.name, 
                     lat: i.location.lat, 
-                    lng: i.location.lng
+                    lng: i.location.lng,
+                    address: i.location.address
                 }))
             receiverFunc(locations) })
 }

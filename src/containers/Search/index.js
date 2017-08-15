@@ -54,6 +54,12 @@ class Search extends Component {
   }
 
   render() {
+    let searchResults;
+    if (this.state.results.length !== 0) {
+      searchResults = (<SearchResultList locations={this.state.results} />);
+    } else {
+      searchResults = "No results."
+    }
     return (
       <div className="search-container">
         <div>
@@ -64,7 +70,7 @@ class Search extends Component {
         </div>
         <br />
         <div>
-          <SearchResultList locations={this.state.results} />
+          {searchResults}
         </div>
       </div>
     );

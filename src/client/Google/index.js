@@ -28,6 +28,7 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit }, receiverF
                     if (details !== null) {
                         suggestions[placeId]['lat'] = details.geometry.location.lat();
                         suggestions[placeId]['lng'] = details.geometry.location.lng();
+                        suggestions[placeId]['address'] = details.formatted_address;
                     }
                 } else {
                     console.log("Google Maps Returned: " + status)

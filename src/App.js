@@ -44,18 +44,22 @@ class App extends Component {
 
   enableSearchIfAllSuccess = () => {
     if (this.state.resultsReceived.foursquare === true && this.state.resultsReceived.google === true) {
-      this.setState({shouldSubmitForm: false})
+      this.setState({shouldSubmitForm: false}, () => {
+        this.setState({resultsReceived: { google: false, foursquare: false }})
+      })
     }
   }
   
   onFoursquareSuccess = () => {
-    this.setState({resultsReceived: { foursquare: true, google: this.state.resultsReceived.google }})
-    this.enableSearchIfAllSuccess()
+    this.setState({resultsReceived: { foursquare: true, google: this.state.resultsReceived.google }}, () => {
+        this.enableSearchIfAllSuccess()
+    })
   }
 
   onGoogleSuccess = () => {
-    this.setState({resultsReceived: { google: true, foursquare: this.state.resultsReceived.foursquare }})
-    this.enableSearchIfAllSuccess()
+    this.setState({resultsReceived: { google: true, foursquare: this.state.resultsReceived.foursquare }}, () => {
+        this.enableSearchIfAllSuccess()
+    })
   }
 
   render() {
@@ -85,7 +89,7 @@ class App extends Component {
             <Search 
               title="Foursquare"
               defaultUrl={FOURSQUARE_DEFAULT_URL}
-              shouldSubmitForm={this.state.shouldSubmitForm} 
+              shouldSubmitForm={this.state.resultsReceived.foursquare ? false : this.state.shouldSubmitForm} 
               onResultsReceived={this.onFoursquareSuccess} 
               query={this.state.query}
               latLng={this.state.latLng} 
@@ -97,7 +101,7 @@ class App extends Component {
             <Search 
               title="Google Maps"
               defaultUrl={GOOGLE_DEFAULT_URL}
-              shouldSubmitForm={this.state.shouldSubmitForm} 
+              shouldSubmitForm={this.state.resultsReceived.google ? false : this.state.shouldSubmitForm} 
               onResultsReceived={this.onGoogleSuccess} 
               query={this.state.query}
               latLng={this.state.latLng}

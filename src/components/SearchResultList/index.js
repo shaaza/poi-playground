@@ -4,12 +4,7 @@ import SearchResult from '../SearchResult/index.js';
 function SearchResultList(props) {
     let list;
     if (props.locations) {
-         list = props.locations.map((l, i) => (
-        <SearchResult location={l} key={i} />
-        ))
-    }
-    else { 
-        list = "No results." 
+         list = props.locations.map((l, i) => (<SearchResult location={l} key={i} />))
     }
 
     return (
@@ -19,9 +14,7 @@ function SearchResultList(props) {
                     <th>Name</th>
                 </tr>
             </thead>
-            <tbody>
-            {list}
-            </tbody>
+            <tbody>{list}</tbody>
         </table>
     )
 }
