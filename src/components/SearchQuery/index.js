@@ -10,6 +10,12 @@ function SearchQuery(props) {
         <div>
           <TextInput label="Current LatLng:" value={props.latLng} onChange={props.onLatLngChange} />    
         </div>
+        <div>
+          <TextInput label="Radius:" value={props.radius} onChange={props.onRadiusChange} />    
+        </div>
+        <div>
+          <TextInput label="# of Results:" value={props.limit} onChange={props.onLimitChange} />    
+        </div>
       </div>
     );
   }

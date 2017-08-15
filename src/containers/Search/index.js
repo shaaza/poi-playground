@@ -14,6 +14,8 @@ class Search extends Component {
       baseUrl: "",
       query: this.props.query,
       latLng: this.props.latLng,
+      radius: this.props.radius,
+      limit: this.props.limit,
       results: false,
     } 
   }
@@ -21,7 +23,9 @@ class Search extends Component {
   componentWillReceiveProps(nextProps) {
      this.setState({
        query: nextProps.query,
-       latLng: nextProps.latLng
+       latLng: nextProps.latLng,
+       radius: nextProps.radius,
+       limit: nextProps.limit
      }, () => {
        this.submitFormIfRequired(nextProps.shouldSubmitForm)
      })
@@ -32,7 +36,9 @@ class Search extends Component {
       let queryDetails = {
         baseUrl: this.state.baseUrl,
         latLng: this.state.latLng,
-        query: this.state.query
+        query: this.state.query,
+        radius: this.state.radius,
+        limit: this.state.limit
       }
       fetchResults(queryDetails, this.receiveResults)
     }

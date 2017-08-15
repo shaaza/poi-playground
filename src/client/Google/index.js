@@ -4,7 +4,7 @@ var acService = new window.google.maps.places.AutocompleteService();
 var placesService = new window.google.maps.places.PlacesService(getOrCreateDummyMapDOMElement('dummyGoogleMap'));
 
 
-function fetchGoogleResults({ baseUrl, latLng, query }, receiverFunc) {
+function fetchGoogleResults({ baseUrl, latLng, query, radius, limit }, receiverFunc) {
     let [lat, lng] = latLng.split(',')
     function getDetailsAndCallReceiver(predictions, status) {
         if (status !== window.google.maps.places.PlacesServiceStatus.OK) { 
@@ -36,13 +36,21 @@ function fetchGoogleResults({ baseUrl, latLng, query }, receiverFunc) {
         }
 
         Object.keys(suggestions)
-              .forEach((placeId) => { placesService.getDetails({ placeId }, getAndPopulateLatLngFor(placeId))})
+              .forEach((placeId) => { placesService.getDetails({ placeId }, getAndPopulateLatLngFor(placeId))});
 
-        let locations = orderedSuggestionsByPlaceID.map((placeId) => suggestions[placeId])
-        receiverFunc(locations)
+        let locations = orderedSuggestionsByPlaceID.map((placeId) => suggestions[placeId]);
+        receiverFunc(locations);
     };
     
-    acService.getPlacePredictions({ input: query, location: new window.google.maps.LatLng(lat, lng), radius: 100000 }, getDetailsAndCallReceiver);
+    let queryParams = { input: query }
+    if (lat.length !== 0 && lng.length !== 0 && radius.length !== 0) {
+        queryParams.location = new window.google.maps.LatLng(parseInt(lat, 10), parseInt(lng, 10));
+        queryParams.radius = parseInt(radius, 10);
+    }
+    if (limit.length !== 0) {
+        queryParams.limit = parseInt(limit, 10)
+    }
+    acService.getPlacePredictions(queryParams, getDetailsAndCallReceiver);
 }
 
 

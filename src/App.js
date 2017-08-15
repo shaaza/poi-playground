@@ -10,7 +10,9 @@ class App extends Component {
     super(props)
     this.state = {
       query: "",
-      latLng: "",
+      latLng: "-6.473381300000001,106.8307777",
+      radius: "100000",
+      limit: "5",
       shouldSubmitForm: false,
       resultsReceived: { foursquare: false, google: false }
     } 
@@ -22,6 +24,14 @@ class App extends Component {
 
   handleLatLngChange = (event) => {
     this.setState({latLng: event.target.value});
+  }
+
+  handleRadiusChange = (event) => {
+    this.setState({radius: event.target.value});
+  }
+
+  handleLimitChange = (event) => {
+    this.setState({limit: event.target.value});
   }
 
   handleSearchButtonClick = (event) => {
@@ -47,7 +57,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        <SearchQuery query={this.state.query} onQueryChange={this.handleSearchQueryChange} onLatLngChange={this.handleLatLngChange} />
+        <SearchQuery 
+          query={this.state.query}
+          latLng={this.state.latLng}
+          radius={this.state.radius}
+          limit={this.state.limit}
+          onQueryChange={this.handleSearchQueryChange}
+          onLatLngChange={this.handleLatLngChange}
+          onRadiusChange={this.handleRadiusChange}
+          onLimitChange={this.handleLimitChange} 
+        />
         <div>
           <button onClick={this.handleSearchButtonClick} disabled={this.state.shouldSubmitForm}>Search</button>
         </div>
@@ -58,13 +77,17 @@ class App extends Component {
             onResultsReceived={this.onFoursquareSuccess} 
             query={this.state.query}
             latLng={this.state.latLng} 
+            radius={this.state.radius}
+            limit={this.state.limit}
           />
           <Search 
             title="Google Maps" 
             shouldSubmitForm={this.state.shouldSubmitForm} 
             onResultsReceived={this.onGoogleSuccess} 
             query={this.state.query}
-            latLng={this.state.latLng} 
+            latLng={this.state.latLng}
+            radius={this.state.radius}
+            limit={this.state.limit}
           />
         </div>
       </div>
