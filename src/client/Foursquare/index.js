@@ -20,7 +20,6 @@ function fetchFourSquareResults({ baseUrl, query, latLng, radius, limit }, recei
                     lat: i.location.lat, 
                     lng: i.location.lng
                 }))
-
             receiverFunc(locations) })
 }
 

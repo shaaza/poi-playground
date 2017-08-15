@@ -13,7 +13,16 @@ function SearchResultList(props) {
     }
 
     return (
-        <div>{list}</div>
+        <table className="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            {list}
+            </tbody>
+        </table>
     )
 }
 

@@ -11,7 +11,7 @@ class Search extends Component {
     super(props)
     this.state = {
       title: props.title,
-      baseUrl: "",
+      baseUrl: props.defaultUrl,
       query: this.props.query,
       latLng: this.props.latLng,
       radius: this.props.radius,
@@ -57,11 +57,12 @@ class Search extends Component {
     return (
       <div className="search-container">
         <div>
-          <h3>{this.state.title}</h3>
+          <h4>{this.state.title}</h4>
         </div>
         <div>
           <TextInput label="Base URL:" value={this.state.baseUrl} onChange={this.handleURLChange} />
         </div>
+        <br />
         <div>
           <SearchResultList locations={this.state.results} />
         </div>

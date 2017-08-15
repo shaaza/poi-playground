@@ -5,6 +5,10 @@ import SearchQuery from './components/SearchQuery/';
 // import logo from './logo.svg';
 import './App.css';
 
+const FOURSQUARE_DEFAULT_URL = "https://api.foursquare.com/v2/venues/search?v=20161016&road&client_id=ORIOILKCING2XM2BAE4RXLPNSCDKWXC1KGIOQX3EAAUGCZ0E&client_secret=S2FTCWQ0POSIKE52AC2XMY5EI3UK3IR5ZKBLEBCQ2MB21HAN"
+
+const GOOGLE_DEFAULT_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key= AIzaSyAdBqXxxw_HHDG7T1FGVITTWYltFGah9YQ&language=en"
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -56,8 +60,8 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <SearchQuery 
+      <div className="container" >
+        <SearchQuery
           query={this.state.query}
           latLng={this.state.latLng}
           radius={this.state.radius}
@@ -67,28 +71,40 @@ class App extends Component {
           onRadiusChange={this.handleRadiusChange}
           onLimitChange={this.handleLimitChange} 
         />
-        <div>
-          <button onClick={this.handleSearchButtonClick} disabled={this.state.shouldSubmitForm}>Search</button>
+        <br />
+        <div className="columns">
+          <div className="column col-1"></div>
+          <div className="column col-10">
+            <button className="btn" onClick={this.handleSearchButtonClick} disabled={this.state.shouldSubmitForm}>Search</button>
+          </div>
         </div>
-        <div className="app-panel">
-          <Search 
-            title="Foursquare" 
-            shouldSubmitForm={this.state.shouldSubmitForm} 
-            onResultsReceived={this.onFoursquareSuccess} 
-            query={this.state.query}
-            latLng={this.state.latLng} 
-            radius={this.state.radius}
-            limit={this.state.limit}
-          />
-          <Search 
-            title="Google Maps" 
-            shouldSubmitForm={this.state.shouldSubmitForm} 
-            onResultsReceived={this.onGoogleSuccess} 
-            query={this.state.query}
-            latLng={this.state.latLng}
-            radius={this.state.radius}
-            limit={this.state.limit}
-          />
+        <br />
+        <div className="columns">
+          <div className="column col-1"></div>
+          <div className="column col-5 text-center">
+            <Search 
+              title="Foursquare"
+              defaultUrl={FOURSQUARE_DEFAULT_URL}
+              shouldSubmitForm={this.state.shouldSubmitForm} 
+              onResultsReceived={this.onFoursquareSuccess} 
+              query={this.state.query}
+              latLng={this.state.latLng} 
+              radius={this.state.radius}
+              limit={this.state.limit}
+            />
+          </div>
+          <div className="column col-5 text-center">
+            <Search 
+              title="Google Maps"
+              defaultUrl={GOOGLE_DEFAULT_URL}
+              shouldSubmitForm={this.state.shouldSubmitForm} 
+              onResultsReceived={this.onGoogleSuccess} 
+              query={this.state.query}
+              latLng={this.state.latLng}
+              radius={this.state.radius}
+              limit={this.state.limit}
+            />
+          </div>
         </div>
       </div>
     );
