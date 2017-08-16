@@ -1,12 +1,12 @@
 import React from 'react';
-
+import './index.css';
 function SearchResult(props) {
     return (
       <tr>
-        <td>
+        <td colSpan="1">
             {props.location.name}
             <br/>
-            <small>{props.location.address}</small>
+            <span className="text-overflow-ellipsis"><small>{props.location.address}{'\u00A0'}</small></span>
         </td>
       </tr>
     );

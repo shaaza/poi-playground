@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchResult from '../SearchResult/index.js';
+import './index.css';
 
 function SearchResultList(props) {
     let list;
@@ -8,7 +9,7 @@ function SearchResultList(props) {
     }
 
     return (
-        <table className="table">
+        <table className="table fixed-layout-table">
             <thead>
                 <tr>
                     <th>Name</th>
