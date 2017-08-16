@@ -12,10 +12,11 @@ class Search extends Component {
     this.state = {
       title: props.title,
       baseUrl: props.defaultUrl,
-      query: this.props.query,
-      latLng: this.props.latLng,
-      radius: this.props.radius,
-      limit: this.props.limit,
+      keyParams: props.keyParams,
+      query: props.query,
+      latLng: props.latLng,
+      radius: props.radius,
+      limit: props.limit,
       results: false,
     } 
   }
@@ -35,6 +36,7 @@ class Search extends Component {
     if (shouldSubmitForm === true) {
       let queryDetails = {
         baseUrl: this.state.baseUrl,
+        keyParams: this.state.keyParams,
         latLng: this.state.latLng,
         query: this.state.query,
         radius: this.state.radius,
@@ -53,6 +55,10 @@ class Search extends Component {
     this.setState({ baseUrl: event.target.value });
   }
 
+  handleKeyParamsChange = (event) => {
+    this.setState({ keyParams: event.target.value })
+  }
+
   render() {
     let searchResults;
     if (this.state.results.length !== 0) {
@@ -67,6 +73,7 @@ class Search extends Component {
         </div>
         <div>
           <TextInput label="Base URL:" value={this.state.baseUrl} onChange={this.handleURLChange} />
+          <TextInput label="Key Params:" value={this.state.keyParams} onChange={this.handleKeyParamsChange} />
         </div>
         <br />
         <div>

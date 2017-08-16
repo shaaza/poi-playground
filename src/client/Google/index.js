@@ -1,10 +1,17 @@
+import loadGoogleMapsWithKey from './setup'
 import getOrCreateDummyMapDOMElement from './util'
 
-var acService = new window.google.maps.places.AutocompleteService();
-var placesService = new window.google.maps.places.PlacesService(getOrCreateDummyMapDOMElement('dummyGoogleMap'));
+var AUTOCOMPLETE_SERVICE;
+var PLACES_SERVICE;
 
+function onGoogleMapsLoaded() {
+    AUTOCOMPLETE_SERVICE = new window.google.maps.places.AutocompleteService();
+    PLACES_SERVICE = new window.google.maps.places.PlacesService(getOrCreateDummyMapDOMElement('dummyGoogleMap'));
+}
 
-function fetchGoogleResults({ baseUrl, latLng, query, radius, limit }, receiverFunc) {
+loadGoogleMapsWithKey(onGoogleMapsLoaded);
+
+function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }, receiverFunc) {
     let [lat, lng] = latLng.split(',')
     function getDetailsAndCallReceiver(predictions, status) {
         if (status !== window.google.maps.places.PlacesServiceStatus.OK) { 
@@ -37,7 +44,7 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit }, receiverF
         }
 
         Object.keys(suggestions)
-              .forEach((placeId) => { placesService.getDetails({ placeId }, getAndPopulateLatLngFor(placeId))});
+              .forEach((placeId) => { PLACES_SERVICE.getDetails({ placeId }, getAndPopulateLatLngFor(placeId))});
 
         let locations = orderedSuggestionsByPlaceID.map((placeId) => suggestions[placeId]);
         receiverFunc(locations);
@@ -51,7 +58,7 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit }, receiverF
     if (limit.length !== 0) {
         queryParams.limit = parseInt(limit, 10)
     }
-    acService.getPlacePredictions(queryParams, getDetailsAndCallReceiver);
+        AUTOCOMPLETE_SERVICE.getPlacePredictions(queryParams, getDetailsAndCallReceiver);
 }
 
 

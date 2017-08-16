@@ -5,9 +5,13 @@ import SearchQuery from './components/SearchQuery/';
 // import logo from './logo.svg';
 import './App.css';
 
-const FOURSQUARE_DEFAULT_URL = "https://api.foursquare.com/v2/venues/search?v=20161016&road&client_id=ORIOILKCING2XM2BAE4RXLPNSCDKWXC1KGIOQX3EAAUGCZ0E&client_secret=S2FTCWQ0POSIKE52AC2XMY5EI3UK3IR5ZKBLEBCQ2MB21HAN"
+const FOURSQUARE_DEFAULT_URL = "https://api.foursquare.com/v2/venues/search?v=20161016&road"
 
-const GOOGLE_DEFAULT_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key= AIzaSyAdBqXxxw_HHDG7T1FGVITTWYltFGah9YQ&language=en"
+const FOURSQUARE_DEFAULT_KEY_PARAMS = "&client_id=ORIOILKCING2XM2BAE4RXLPNSCDKWXC1KGIOQX3EAAUGCZ0E&client_secret=S2FTCWQ0POSIKE52AC2XMY5EI3UK3IR5ZKBLEBCQ2MB21HAN"
+
+const GOOGLE_DEFAULT_URL = "https://maps.googleapis.com/maps/api"
+
+const GOOGLE_DEFAULT_KEY_PARAMS = window.localStorage.getItem('gmapsKey');
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +44,11 @@ class App extends Component {
 
   handleSearchButtonClick = (event) => {
     this.setState({shouldSubmitForm: true})
+  }
+
+  handleClearGMapsKeyButtonClick = (event) => {
+    localStorage.removeItem('gmapsKey');
+    window.location.reload();
   }
 
   enableSearchIfAllSuccess = () => {
@@ -80,6 +89,7 @@ class App extends Component {
           <div className="column col-1"></div>
           <div className="column col-10">
             <button className="btn" onClick={this.handleSearchButtonClick} disabled={this.state.shouldSubmitForm}>Search</button>
+            <button className="btn float-right" onClick={this.handleClearGMapsKeyButtonClick}>Clear Google Maps Key</button>
           </div>
         </div>
         <br />
@@ -89,6 +99,7 @@ class App extends Component {
             <Search 
               title="Foursquare"
               defaultUrl={FOURSQUARE_DEFAULT_URL}
+              keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
               shouldSubmitForm={this.state.resultsReceived.foursquare ? false : this.state.shouldSubmitForm} 
               onResultsReceived={this.onFoursquareSuccess} 
               query={this.state.query}
@@ -101,6 +112,7 @@ class App extends Component {
             <Search 
               title="Google Maps"
               defaultUrl={GOOGLE_DEFAULT_URL}
+              keyParams={GOOGLE_DEFAULT_KEY_PARAMS}
               shouldSubmitForm={this.state.resultsReceived.google ? false : this.state.shouldSubmitForm} 
               onResultsReceived={this.onGoogleSuccess} 
               query={this.state.query}
