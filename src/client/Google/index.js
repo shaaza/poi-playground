@@ -1,4 +1,3 @@
-import loadGoogleMapsWithKey from './setup'
 import getOrCreateDummyMapDOMElement from './util'
 
 var AUTOCOMPLETE_SERVICE;
@@ -9,7 +8,7 @@ function onGoogleMapsLoaded() {
     PLACES_SERVICE = new window.google.maps.places.PlacesService(getOrCreateDummyMapDOMElement('dummyGoogleMap'));
 }
 
-loadGoogleMapsWithKey(onGoogleMapsLoaded);
+window.loadGoogleMapsWithKey(onGoogleMapsLoaded);
 
 function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }, receiverFunc) {
     let [lat, lng] = latLng.split(',')

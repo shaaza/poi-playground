@@ -20,6 +20,31 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <link rel="stylesheet" href="spectre.min.css">
+    <script>
+        var GMAPS_KEY = window.localStorage.getItem('gmapsKey');
+        var GMAPS_BASE_URL = "https://maps.googleapis.com/maps/api/js?key="
+        function getOrSetMapsKey() {
+          if (GMAPS_KEY === null) {
+              GMAPS_KEY = window.prompt("Please enter google maps key");
+              if (GMAPS_KEY !== "") {
+                  window.localStorage.setItem('gmapsKey', GMAPS_KEY)
+              } else {
+                  alert("Please enter a key before proceeding.");
+                  window.location.reload();
+              }
+          }
+         return GMAPS_KEY;
+        }
+
+        function loadGoogleMapsWithKey(onGoogleMapsLoaded) {
+          var GMAPS_KEY = window.getOrSetMapsKey();
+          var GMAPS_SRC = window.GMAPS_BASE_URL + GMAPS_KEY + "&libraries=geometry,places";
+          var GMAPS_SCRIPT_ELEMENT = document.createElement('script');
+          GMAPS_SCRIPT_ELEMENT.src = GMAPS_SRC;
+          GMAPS_SCRIPT_ELEMENT.onload = onGoogleMapsLoaded;
+          document.getElementsByTagName('head')[0].appendChild(GMAPS_SCRIPT_ELEMENT);
+        }
+    </script>
     <title>Location Search APIs Playground</title>
   </head>
   <body>
