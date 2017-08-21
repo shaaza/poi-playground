@@ -2,6 +2,7 @@
   "name": "compare-search-apis",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://transport.pages.golabs.io/poi-playground",
   "dependencies": {
     "google-map-react": "^0.24.0",
     "react": "^15.6.1",
