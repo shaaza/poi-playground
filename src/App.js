@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from './containers/Search/';
 import SearchQuery from './components/SearchQuery/';
+import Map from './containers/Map/';
 
 // import logo from './logo.svg';
 import './App.css';
@@ -21,8 +22,10 @@ class App extends Component {
       latLng: "-6.473381300000001,106.8307777",
       radius: "100000",
       limit: "5",
-      shouldSubmitForm: false,
-      resultsReceived: { foursquare: false, google: false }
+      shouldSubmitFormFoursquare: false, 
+      shouldSubmitFormGoogle: false,
+      resultsReceived: { foursquare: false, google: false },
+      isSearching: false
     } 
   }
 
@@ -43,7 +46,7 @@ class App extends Component {
   }
 
   handleSearchButtonClick = (event) => {
-    this.setState({shouldSubmitForm: true})
+    this.setState({shouldSubmitFormFoursquare: true, shouldSubmitFormGoogle: true, isSearching: true })
   }
 
   handleClearGMapsKeyButtonClick = (event) => {
@@ -51,24 +54,41 @@ class App extends Component {
     window.location.reload();
   }
 
-  enableSearchIfAllSuccess = () => {
+  resetSearchIfAllSuccess = () => {
     if (this.state.resultsReceived.foursquare === true && this.state.resultsReceived.google === true) {
-      this.setState({shouldSubmitForm: false}, () => {
-        this.setState({resultsReceived: { google: false, foursquare: false }})
-      })
+       this.setState({ 
+        resultsReceived: { foursquare: false, google: false },
+        isSearching: false
+      });
     }
   }
   
   onFoursquareSuccess = () => {
-    this.setState({resultsReceived: { foursquare: true, google: this.state.resultsReceived.google }}, () => {
-        this.enableSearchIfAllSuccess()
-    })
+    if (this.state.shouldSubmitFormFoursquare === true && this.state.resultsReceived.foursquare === false) {
+      this.setState({ 
+        resultsReceived: { 
+          foursquare: true, 
+          google: this.state.resultsReceived.google 
+        },
+        shouldSubmitFormFoursquare: false, 
+      }, () => {
+          this.resetSearchIfAllSuccess()
+      })
+    }
   }
 
   onGoogleSuccess = () => {
-    this.setState({resultsReceived: { google: true, foursquare: this.state.resultsReceived.foursquare }}, () => {
-        this.enableSearchIfAllSuccess()
-    })
+    if (this.state.shouldSubmitFormGoogle === true && this.state.resultsReceived.google === false) {
+      this.setState({ 
+        resultsReceived: { 
+          google: true, 
+          foursquare: this.state.resultsReceived.foursquare 
+        },
+        shouldSubmitFormGoogle: false, 
+      }, () => {
+          this.resetSearchIfAllSuccess()
+      })
+    }
   }
 
   render() {
@@ -88,7 +108,7 @@ class App extends Component {
         <div className="columns">
           <div className="column col-1"></div>
           <div className="column col-10">
-            <button className="btn" onClick={this.handleSearchButtonClick} disabled={this.state.shouldSubmitForm}>Search</button>
+            <button className="btn" onClick={this.handleSearchButtonClick} disabled={this.state.isSearching}>Search</button>
             <button className="btn float-right" onClick={this.handleClearGMapsKeyButtonClick}>Clear Google Maps Key</button>
           </div>
         </div>
@@ -100,7 +120,7 @@ class App extends Component {
               title="Foursquare"
               defaultUrl={FOURSQUARE_DEFAULT_URL}
               keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
-              shouldSubmitForm={this.state.resultsReceived.foursquare ? false : this.state.shouldSubmitForm} 
+              shouldSubmitForm={this.state.shouldSubmitFormFoursquare} 
               onResultsReceived={this.onFoursquareSuccess} 
               query={this.state.query}
               latLng={this.state.latLng} 
@@ -113,7 +133,7 @@ class App extends Component {
               title="Google Maps"
               defaultUrl={GOOGLE_DEFAULT_URL}
               keyParams={GOOGLE_DEFAULT_KEY_PARAMS}
-              shouldSubmitForm={this.state.resultsReceived.google ? false : this.state.shouldSubmitForm} 
+              shouldSubmitForm={this.state.shouldSubmitFormGoogle} 
               onResultsReceived={this.onGoogleSuccess} 
               query={this.state.query}
               latLng={this.state.latLng}
@@ -122,7 +142,14 @@ class App extends Component {
             />
           </div>
         </div>
+        <br />
+        <div className="columns">
+          <div className="column map-container">
+            <Map />
+          </div>
+        </div>
       </div>
+
     );
   }
 }
