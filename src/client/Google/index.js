@@ -1,15 +1,5 @@
 import getOrCreateDummyMapDOMElement from './util'
 
-var AUTOCOMPLETE_SERVICE;
-var PLACES_SERVICE;
-
-function onGoogleMapsLoaded() {
-    AUTOCOMPLETE_SERVICE = new window.google.maps.places.AutocompleteService();
-    PLACES_SERVICE = new window.google.maps.places.PlacesService(getOrCreateDummyMapDOMElement('dummyGoogleMap'));
-}
-
-window.loadGoogleMapsWithKey(onGoogleMapsLoaded);
-
 function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }, receiverFunc) {
     let [lat, lng] = latLng.split(',')
     function getDetailsAndCallReceiver(predictions, status) {
@@ -43,7 +33,7 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
         }
 
         Object.keys(suggestions)
-              .forEach((placeId) => { PLACES_SERVICE.getDetails({ placeId }, getAndPopulateLatLngFor(placeId))});
+              .forEach((placeId) => { window.PLACES_SERVICE.getDetails({ placeId }, getAndPopulateLatLngFor(placeId))});
 
         let locations = orderedSuggestionsByPlaceID.map((placeId) => suggestions[placeId]);
         receiverFunc(locations);
@@ -57,7 +47,7 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
     if (limit.length !== 0) {
         queryParams.limit = parseInt(limit, 10)
     }
-        AUTOCOMPLETE_SERVICE.getPlacePredictions(queryParams, getDetailsAndCallReceiver);
+        window.AUTOCOMPLETE_SERVICE.getPlacePredictions(queryParams, getDetailsAndCallReceiver);
 }
 
 

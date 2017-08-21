@@ -13,3 +13,5 @@ function fetchResults (queryDetails, receiverFunc) {
 }
 
 export default fetchResults;
+
+
