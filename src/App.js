@@ -138,7 +138,7 @@ class App extends Component {
         <br />
         <div className="columns">
           <div className="column map-container" id="google-map">
-            <Map />
+            <Map markers={[{lat: -6.2556, lng: 106.8108, color:'#00cae9'}]} />
           </div>
         </div>
       </div>

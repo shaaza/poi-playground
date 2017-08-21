@@ -10,6 +10,14 @@ class Map extends Component {
   };
 
   render() {
+    const markers = this.props.markers.map((m, i) => (
+      <Marker
+        key={"marker-"+i}
+        lat={m.lat}
+        lng={m.lng}
+        color={m.color}
+      />
+      ))
     return (
        <GoogleMapReact
         bootstrapURLKeys={ {key: window.localStorage.getItem('gmapsKey')} }
@@ -17,11 +25,7 @@ class Map extends Component {
         defaultCenter={this.defaultProps.center}
         defaultZoom={this.defaultProps.zoom}
       >
-        <Marker
-          lat={-6.2556} 
-          lng={106.8108} 
-          color={'#00cae9'}
-        />
+        {markers}
       </GoogleMapReact>
     );
   }
