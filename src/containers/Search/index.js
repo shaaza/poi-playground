@@ -73,7 +73,12 @@ class Search extends Component {
         </div>
         <div>
           <TextInput label="Base URL:" value={this.state.baseUrl} onChange={this.handleURLChange} />
-          <TextInput label="Key Params:" value={this.state.keyParams} onChange={this.handleKeyParamsChange} />
+          <TextInput 
+            label="Key Params:"
+            value={this.state.keyParams}
+            onChange={this.handleKeyParamsChange}
+            disabled={this.props.isKeyInputDisabled} 
+          />
         </div>
         <br />
         <div>

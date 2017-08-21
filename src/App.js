@@ -132,6 +132,7 @@ class App extends Component {
               latLng={this.state.latLng}
               radius={this.state.radius}
               limit={this.state.limit}
+              isKeyInputDisabled={true}
             />
           </div>
         </div>
