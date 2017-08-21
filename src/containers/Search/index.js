@@ -48,7 +48,12 @@ class Search extends Component {
 
   receiveResults = (results) => {
     this.setState({ results });
-    this.props.onResultsReceived();
+    let markers = results.map((r) => ({
+      lat: r['lat'],
+      lng: r['lng'],
+      color: this.props.markerColor
+    }))
+    this.props.onResultsReceived(markers);
   }
 
   handleURLChange = (event) => {

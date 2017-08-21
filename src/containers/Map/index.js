@@ -12,7 +12,7 @@ class Map extends Component {
   render() {
     const markers = this.props.markers.map((m, i) => (
       <Marker
-        key={"marker-"+i}
+        key={"marker-" + i}
         lat={m.lat}
         lng={m.lng}
         color={m.color}

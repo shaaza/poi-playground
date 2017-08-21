@@ -18,7 +18,8 @@ class App extends Component {
       shouldSubmitFormFoursquare: false, 
       shouldSubmitFormGoogle: false,
       resultsReceived: { foursquare: false, google: false },
-      isSearching: false
+      isSearching: false,
+      markers: []
     } 
   }
 
@@ -39,7 +40,12 @@ class App extends Component {
   }
 
   handleSearchButtonClick = (event) => {
-    this.setState({shouldSubmitFormFoursquare: true, shouldSubmitFormGoogle: true, isSearching: true })
+    this.setState({
+      markers: [],
+      shouldSubmitFormFoursquare: true, 
+      shouldSubmitFormGoogle: true, 
+      isSearching: true 
+    });
   }
 
   handleClearGMapsKeyButtonClick = (event) => {
@@ -48,6 +54,7 @@ class App extends Component {
   }
 
   resetSearchIfAllSuccess = () => {
+    console.log(this.state.markers)
     if (this.state.resultsReceived.foursquare === true && this.state.resultsReceived.google === true) {
        this.setState({ 
         resultsReceived: { foursquare: false, google: false },
@@ -56,7 +63,7 @@ class App extends Component {
     }
   }
   
-  onFoursquareSuccess = () => {
+  onFoursquareSuccess = (markers) => {
     if (this.state.shouldSubmitFormFoursquare === true && this.state.resultsReceived.foursquare === false) {
       this.setState({ 
         resultsReceived: { 
@@ -64,13 +71,14 @@ class App extends Component {
           google: this.state.resultsReceived.google 
         },
         shouldSubmitFormFoursquare: false, 
-      }, () => {
-          this.resetSearchIfAllSuccess()
-      })
-    }
+      }, () => {this.resetSearchIfAllSuccess()});
+    console.log("F:", markers)
+    this.setState({markers: this.state.markers.concat(markers)});
+    console.log("F state:", this.state.markers)
+    };
   }
 
-  onGoogleSuccess = () => {
+  onGoogleSuccess = (markers) => {
     if (this.state.shouldSubmitFormGoogle === true && this.state.resultsReceived.google === false) {
       this.setState({ 
         resultsReceived: { 
@@ -78,9 +86,10 @@ class App extends Component {
           foursquare: this.state.resultsReceived.foursquare 
         },
         shouldSubmitFormGoogle: false, 
-      }, () => {
-          this.resetSearchIfAllSuccess()
-      })
+      }, () => {this.resetSearchIfAllSuccess()});
+      console.log("G:", markers)
+      this.setState({markers: this.state.markers.concat(markers)});
+      console.log("G state:", this.state.markers)
     }
   }
 
@@ -119,6 +128,7 @@ class App extends Component {
               latLng={this.state.latLng} 
               radius={this.state.radius}
               limit={this.state.limit}
+              markerColor={"blue"}
             />
           </div>
           <div className="column col-5 text-center">
@@ -133,13 +143,14 @@ class App extends Component {
               radius={this.state.radius}
               limit={this.state.limit}
               isKeyInputDisabled={true}
+              markerColor={"green"}
             />
           </div>
         </div>
         <br />
         <div className="columns">
           <div className="column map-container" id="google-map">
-            <Map markers={[{lat: -6.2556, lng: 106.8108, color:'#00cae9'}]} />
+            <Map markers={this.state.markers} />
           </div>
         </div>
       </div>
