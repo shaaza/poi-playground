@@ -144,7 +144,7 @@ class App extends Component {
         </div>
         <br />
         <div className="columns">
-          <div className="column map-container">
+          <div className="column map-container" id="google-map">
             <Map />
           </div>
         </div>

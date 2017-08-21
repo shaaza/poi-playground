@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import googleMapLoader from '../../client/Google/map_loader';
 import GoogleMapReact from 'google-map-react';
 
 class Map extends Component {
@@ -19,6 +19,8 @@ class Map extends Component {
     );
     return (
        <GoogleMapReact
+        bootstrapURLKeys={ {key: window.localStorage.getItem('gmapsKey')} }
+        googleMapLoader={googleMapLoader}
         defaultCenter={this.defaultProps.center}
         defaultZoom={this.defaultProps.zoom}
       >

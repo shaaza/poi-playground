@@ -34,40 +34,10 @@
                   window.location.reload();
               }
           }
-         return GMAPS_KEY;
+          return GMAPS_KEY;
         }
         GMAPS_KEY = getOrSetMapsKey();
-        const GMAPS_URL_WITH_KEY = GMAPS_BASE_URL + GMAPS_KEY;
-        const GMAPS_LIB_SRC = GMAPS_URL_WITH_KEY + "&libraries=geometry,places";
 
-        function loadGoogleMapsWithKey(onGoogleMapsLoaded) {
-          var GMAPS_SCRIPT_ELEMENT = document.createElement('script');
-          GMAPS_SCRIPT_ELEMENT.src = GMAPS_LIB_SRC;
-          GMAPS_SCRIPT_ELEMENT.onload = onGoogleMapsLoaded;
-          document.getElementsByTagName('head')[0].appendChild(GMAPS_SCRIPT_ELEMENT);
-        }
-        
-        var AUTOCOMPLETE_SERVICE;
-        var PLACES_SERVICE;
-
-        function getOrCreateDummyMapDOMElement(id) {
-            let dummyElement = document.getElementById(id)
-
-            if (!dummyElement) {
-                dummyElement = document.createElement('div')
-                dummyElement.setAttribute('id', id)
-                document.body.appendChild(dummyElement)
-            }
-
-            return dummyElement
-        }
-
-        function onGoogleMapsLoaded() {
-            AUTOCOMPLETE_SERVICE = new window.google.maps.places.AutocompleteService();
-            PLACES_SERVICE = new window.google.maps.places.PlacesService(getOrCreateDummyMapDOMElement('dummyGoogleMap'));
-        }
-
-        window.loadGoogleMapsWithKey(onGoogleMapsLoaded);
     </script>
     <title>Location Search APIs Playground</title>
   </head>
