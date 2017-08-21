@@ -2,4 +2,8 @@
     display: inline-block;
     vertical-align: top;
     width: 100%;
+    border: 1px dashed #d1d6fc;
+    border-width: 1px;
+    border-radius: 4px;
+    padding: 10px;
 }

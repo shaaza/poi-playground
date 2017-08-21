@@ -6,3 +6,17 @@
 .search-panel {
   width: 100%
 }
+
+.map-container {
+  position:absolute;
+  width: 1000px;
+  height: 400px;
+  left: 50%;
+  margin-left: -500px;
+  margin-bottom: 50px;
+}
+
+.footer {
+  position: absolute;
+  height: 100px;
+}

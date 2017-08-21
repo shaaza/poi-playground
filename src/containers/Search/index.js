@@ -79,6 +79,7 @@ class Search extends Component {
         <div>
           {searchResults}
         </div>
+        <br/>
       </div>
     );
   }
