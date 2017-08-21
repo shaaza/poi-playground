@@ -4,7 +4,7 @@ stages:
 pages:
   stage: publish_pages
   script:
-  - mkdir public
+  - mkdir public || true
   - cp -R build/* public/
   artifacts:
     paths:
