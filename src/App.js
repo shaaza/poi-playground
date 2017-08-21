@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
+import { FOURSQUARE_DEFAULT_URL, FOURSQUARE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_URL } from './constants';
 import Search from './containers/Search/';
 import SearchQuery from './components/SearchQuery/';
 import Map from './containers/Map/';
 
 // import logo from './logo.svg';
 import './App.css';
-
-const FOURSQUARE_DEFAULT_URL = "https://api.foursquare.com/v2/venues/search?v=20161016&road"
-
-const FOURSQUARE_DEFAULT_KEY_PARAMS = "&client_id=ORIOILKCING2XM2BAE4RXLPNSCDKWXC1KGIOQX3EAAUGCZ0E&client_secret=S2FTCWQ0POSIKE52AC2XMY5EI3UK3IR5ZKBLEBCQ2MB21HAN"
-
-const GOOGLE_DEFAULT_URL = "https://maps.googleapis.com/maps/api"
-
-const GOOGLE_DEFAULT_KEY_PARAMS = window.localStorage.getItem('gmapsKey');
 
 class App extends Component {
   constructor(props) {
