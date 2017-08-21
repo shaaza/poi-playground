@@ -1,0 +1,13 @@
+stages:
+  - publish_pages
+
+pages:
+  stage: publish_pages
+  script:
+  - mkdir public
+  - cp -R build/* public/
+  artifacts:
+    paths:
+    - public
+  only:
+    - master
