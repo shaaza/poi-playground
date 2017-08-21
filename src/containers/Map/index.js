@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import googleMapLoader from '../../client/Google/map_loader';
 import GoogleMapReact from 'google-map-react';
+import googleMapLoader from '../../client/Google/map_loader';
+import Marker from '../../components/Marker';
 
 class Map extends Component {
   defaultProps = {
@@ -9,14 +10,6 @@ class Map extends Component {
   };
 
   render() {
-    const DummyMarker = ({ text }) => (
-      <div style={{
-        position: 'relative', color: 'black',
-        height: 40, width: 60, top: -20, left: -30,    
-      }}>
-        {text}
-      </div>
-    );
     return (
        <GoogleMapReact
         bootstrapURLKeys={ {key: window.localStorage.getItem('gmapsKey')} }
@@ -24,10 +17,10 @@ class Map extends Component {
         defaultCenter={this.defaultProps.center}
         defaultZoom={this.defaultProps.zoom}
       >
-        <DummyMarker
+        <Marker
           lat={-6.2556} 
           lng={106.8108} 
-          text={'<I\'m here!>'} 
+          color={'#00cae9'}
         />
       </GoogleMapReact>
     );
