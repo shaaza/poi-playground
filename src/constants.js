@@ -5,3 +5,8 @@ export const FOURSQUARE_DEFAULT_KEY_PARAMS = "&client_id=ORIOILKCING2XM2BAE4RXLP
 export const GOOGLE_DEFAULT_URL = "https://maps.googleapis.com/maps/api";
 
 export const GOOGLE_DEFAULT_KEY_PARAMS = window.localStorage.getItem('gmapsKey');
+
+export const MARKER_COLORS = {
+    "foursquare": "blue",
+    "placesAutocomplete": "green"
+}

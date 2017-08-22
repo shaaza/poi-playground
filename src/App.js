@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FOURSQUARE_DEFAULT_URL, FOURSQUARE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_URL } from './constants';
+import { FOURSQUARE_DEFAULT_URL, FOURSQUARE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_URL, MARKER_COLORS } from './constants';
 import Search from './containers/Search/';
 import SearchQuery from './components/SearchQuery/';
 import Map from './containers/Map/';
@@ -128,7 +128,7 @@ class App extends Component {
               latLng={this.state.latLng} 
               radius={this.state.radius}
               limit={this.state.limit}
-              markerColor={"blue"}
+              markerColor={MARKER_COLORS["foursquare"]}
             />
           </div>
           <div className="column col-5 text-center">
@@ -143,7 +143,7 @@ class App extends Component {
               radius={this.state.radius}
               limit={this.state.limit}
               isKeyInputDisabled={true}
-              markerColor={"green"}
+              markerColor={MARKER_COLORS["placesAutocomplete"]}
             />
           </div>
         </div>

@@ -85,6 +85,7 @@ class Search extends Component {
             onChange={this.handleKeyParamsChange}
             disabled={this.props.isKeyInputDisabled} 
           />
+          <span className="label" style={{background: this.props.markerColor, color: "white"}}>{this.props.markerColor}</span>
         </div>
         <br />
         <div>
