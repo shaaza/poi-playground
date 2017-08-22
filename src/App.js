@@ -54,7 +54,6 @@ class App extends Component {
   }
 
   resetSearchIfAllSuccess = () => {
-    console.log(this.state.markers)
     if (this.state.resultsReceived.foursquare === true && this.state.resultsReceived.google === true) {
        this.setState({ 
         resultsReceived: { foursquare: false, google: false },
@@ -72,9 +71,7 @@ class App extends Component {
         },
         shouldSubmitFormFoursquare: false, 
       }, () => {this.resetSearchIfAllSuccess()});
-    console.log("F:", markers)
     this.setState({markers: this.state.markers.concat(markers)});
-    console.log("F state:", this.state.markers)
     };
   }
 
@@ -87,9 +84,7 @@ class App extends Component {
         },
         shouldSubmitFormGoogle: false, 
       }, () => {this.resetSearchIfAllSuccess()});
-      console.log("G:", markers)
       this.setState({markers: this.state.markers.concat(markers)});
-      console.log("G state:", this.state.markers)
     }
   }
 
