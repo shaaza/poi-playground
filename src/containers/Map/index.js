@@ -16,6 +16,7 @@ class Map extends Component {
         lat={m.lat}
         lng={m.lng}
         color={m.color}
+        rank={m.rank}
       />
       ))
     return (

@@ -48,10 +48,11 @@ class Search extends Component {
 
   receiveResults = (results) => {
     this.setState({ results });
-    let markers = results.map((r) => ({
+    let markers = results.map((r, i) => ({
       lat: r['lat'],
       lng: r['lng'],
-      color: this.props.markerColor
+      color: this.props.markerColor,
+      rank: i + 1
     }))
     this.props.onResultsReceived(markers);
   }
