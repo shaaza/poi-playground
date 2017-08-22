@@ -35,6 +35,15 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
                 address: prediction['structured_formatting']['secondary_text'],
             }
         });
+        let successCounterForPlaceDetails = 0
+
+        function checkIfAllSuccessAndCallReceiver() {
+            successCounterForPlaceDetails += 1;
+            if (successCounterForPlaceDetails === 5) {
+                let locations = orderedSuggestionsByPlaceID.map((placeId) => suggestions[placeId]);
+                receiverFunc(locations);
+            }
+        }
 
         function getAndPopulateLatLngFor(placeId, isLastResult) {
             return function(details, status) {
@@ -44,10 +53,8 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
                         suggestions[placeId]['lng'] = details.geometry.location.lng();
                         suggestions[placeId]['address'] = details.formatted_address;
                     }
-                    if (isLastResult) { 
-                        let locations = orderedSuggestionsByPlaceID.map((placeId) => suggestions[placeId]);
-                        receiverFunc(locations);
-                    }
+                    checkIfAllSuccessAndCallReceiver();
+
                 } else {
                     console.log("Google Maps Returned: " + status)
                 }
