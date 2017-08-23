@@ -21,6 +21,11 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
     }
     let [lat, lng] = latLng.split(',')
     function getDetailsAndCallReceiver(predictions, status) {
+        if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) { 
+            receiverFunc([]);
+            return;
+        }
+
         if (status !== window.google.maps.places.PlacesServiceStatus.OK) { 
             console.log("Google Maps Returned: " + status + " for Autocomplete")
             return;
