@@ -10,7 +10,8 @@ class Map extends Component {
   };
 
   render() {
-    const markers = this.props.markers.map((m, i) => (
+    const markers = this.props.markers.filter((m) => (typeof m.lat !== "undefined" && typeof m.lng !== "undefined"))
+                                      .map((m, i) => (
       <Marker
         key={"marker-" + i}
         lat={m.lat}
