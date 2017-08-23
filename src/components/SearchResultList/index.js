@@ -10,10 +10,9 @@ function SearchResultList(props) {
 
     return (
         <table className="table fixed-layout-table">
-            <col width="20"></col>
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th width="20">#</th>
                     <th>Name</th>
                 </tr>
             </thead>

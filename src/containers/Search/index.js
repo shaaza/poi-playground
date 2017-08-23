@@ -11,6 +11,7 @@ class Search extends Component {
     super(props)
     this.state = {
       title: props.title,
+      isSearching: false,
       baseUrl: props.defaultUrl,
       keyParams: props.keyParams,
       query: props.query,
@@ -33,7 +34,7 @@ class Search extends Component {
   }
 
   submitFormIfRequired(shouldSubmitForm) {
-    if (shouldSubmitForm === true) {
+    if (shouldSubmitForm & !this.state.isSearching) {
       let queryDetails = {
         baseUrl: this.state.baseUrl,
         keyParams: this.state.keyParams,
@@ -42,12 +43,13 @@ class Search extends Component {
         radius: this.state.radius,
         limit: this.state.limit
       }
-      fetchResults(queryDetails, this.receiveResults)
+      this.setState({isSearching: true});
+      fetchResults(queryDetails, this.receiveResults);
     }
   }
 
   receiveResults = (results) => {
-    this.setState({ results });
+    this.setState({ results, isSearching: false });
     let markers = results.map((r, i) => ({
       lat: r['lat'],
       lng: r['lng'],

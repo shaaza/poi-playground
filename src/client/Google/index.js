@@ -22,11 +22,11 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
     let [lat, lng] = latLng.split(',')
     function getDetailsAndCallReceiver(predictions, status) {
         if (status !== window.google.maps.places.PlacesServiceStatus.OK) { 
-            console.log("Google Maps Returned: " + status)
+            console.log("Google Maps Returned: " + status + " for Autocomplete")
             return;
         }
 
-        let suggestions = {}
+        let suggestions = {};
         let orderedSuggestionsByPlaceID = predictions.map((p) => (p['place_id']))
 
         predictions.forEach((prediction) => {
@@ -39,7 +39,7 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
 
         function checkIfAllSuccessAndCallReceiver() {
             successCounterForPlaceDetails += 1;
-            if (successCounterForPlaceDetails === 5) {
+            if (successCounterForPlaceDetails === Object.keys(suggestions).length) {
                 let locations = orderedSuggestionsByPlaceID.map((placeId) => suggestions[placeId]);
                 receiverFunc(locations);
             }
@@ -53,11 +53,10 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
                         suggestions[placeId]['lng'] = details.geometry.location.lng();
                         suggestions[placeId]['address'] = details.formatted_address;
                     }
-                    checkIfAllSuccessAndCallReceiver();
-
                 } else {
-                    console.log("Google Maps Returned: " + status)
+                    console.log("Google Maps Returned: " + status + " for Place Details")
                 }
+                checkIfAllSuccessAndCallReceiver();
             }
         }
 

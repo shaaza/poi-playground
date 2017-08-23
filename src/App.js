@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FOURSQUARE_DEFAULT_URL, FOURSQUARE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_URL, MARKER_COLORS } from './constants';
+import { FOURSQUARE_DEFAULT_URLS, FOURSQUARE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_KEY_PARAMS, GOOGLE_DEFAULT_URLS, MARKER_COLORS } from './constants';
 import Search from './containers/Search/';
 import SearchQuery from './components/SearchQuery/';
 import Map from './containers/Map/';
@@ -15,9 +15,14 @@ class App extends Component {
       latLng: "-6.473381300000001,106.8307777",
       radius: "100000",
       limit: "5",
-      shouldSubmitFormFoursquare: false, 
+      shouldSubmitFormFoursquareSearch: false,
+      shouldSubmitFormFoursquareSuggestCompletion: false, 
       shouldSubmitFormGoogle: false,
-      resultsReceived: { foursquare: false, google: false },
+      resultsReceived: { 
+        foursquareSuggestCompletion: false, 
+        foursquareSearch: false,
+        google: false 
+      },
       isSearching: false,
       markers: []
     } 
@@ -42,8 +47,9 @@ class App extends Component {
   handleSearchButtonClick = (event) => {
     this.setState({
       markers: [],
-      shouldSubmitFormFoursquare: true, 
-      shouldSubmitFormGoogle: true, 
+      shouldSubmitFormFoursquareSearch: true, 
+      shouldSubmitFormFoursquareSuggestCompletion: true, 
+      shouldSubmitFormGoogle: true,
       isSearching: true 
     });
   }
@@ -54,33 +60,52 @@ class App extends Component {
   }
 
   resetSearchIfAllSuccess = () => {
-    if (this.state.resultsReceived.foursquare === true && this.state.resultsReceived.google === true) {
+    let isAllResultsReceived = (this.state.resultsReceived.foursquareSearch && 
+                                this.state.resultsReceived.google && 
+                                this.state.resultsReceived.foursquareSuggestCompletion)
+    if (isAllResultsReceived) {
        this.setState({ 
-        resultsReceived: { foursquare: false, google: false },
+        resultsReceived: { foursquareSearch: false, foursquareSuggestCompletion: false, google: false },
         isSearching: false
       });
     }
   }
   
-  onFoursquareSuccess = (markers) => {
-    if (this.state.shouldSubmitFormFoursquare === true && this.state.resultsReceived.foursquare === false) {
+  onFoursquareSuggestCompletionSuccess = (markers) => {
+    if (this.state.shouldSubmitFormFoursquareSuggestCompletion && !this.state.resultsReceived.foursquareSuggestCompletion) {
       this.setState({ 
         resultsReceived: { 
-          foursquare: true, 
+          foursquareSuggestCompletion: true, 
+          foursquareSearch: this.state.resultsReceived.foursquareSearch,
           google: this.state.resultsReceived.google 
         },
-        shouldSubmitFormFoursquare: false, 
+        shouldSubmitFormFoursquareSuggestCompletion: false, 
+      }, () => {this.resetSearchIfAllSuccess()});
+    this.setState({markers: this.state.markers.concat(markers)});
+    };
+  }
+
+  onFoursquareSearchSuccess = (markers) => {
+    if (this.state.shouldSubmitFormFoursquareSearch && !this.state.resultsReceived.foursquareSearch) {
+      this.setState({ 
+        resultsReceived: { 
+          foursquareSearch: true, 
+          foursquareSuggestCompletion: this.state.resultsReceived.foursquareSuggestCompletion,
+          google: this.state.resultsReceived.google 
+        },
+        shouldSubmitFormFoursquareSearch: false, 
       }, () => {this.resetSearchIfAllSuccess()});
     this.setState({markers: this.state.markers.concat(markers)});
     };
   }
 
   onGoogleSuccess = (markers) => {
-    if (this.state.shouldSubmitFormGoogle === true && this.state.resultsReceived.google === false) {
+    if (this.state.shouldSubmitFormGoogle && !this.state.resultsReceived.google) {
       this.setState({ 
         resultsReceived: { 
           google: true, 
-          foursquare: this.state.resultsReceived.foursquare 
+          foursquareSearch: this.state.resultsReceived.foursquareSearch,
+          foursquareSuggestCompletion: this.state.resultsReceived.foursquareSuggestCompletion,
         },
         shouldSubmitFormGoogle: false, 
       }, () => {this.resetSearchIfAllSuccess()});
@@ -114,22 +139,22 @@ class App extends Component {
           <div className="column col-1"></div>
           <div className="column col-5 text-center">
             <Search 
-              title="Foursquare"
-              defaultUrl={FOURSQUARE_DEFAULT_URL}
+              title="Foursquare Suggest Completion"
+              defaultUrl={FOURSQUARE_DEFAULT_URLS['suggestcompletion']}
               keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
-              shouldSubmitForm={this.state.shouldSubmitFormFoursquare} 
-              onResultsReceived={this.onFoursquareSuccess} 
+              shouldSubmitForm={this.state.shouldSubmitFormFoursquareSuggestCompletion} 
+              onResultsReceived={this.onFoursquareSuggestCompletionSuccess} 
               query={this.state.query}
               latLng={this.state.latLng} 
               radius={this.state.radius}
               limit={this.state.limit}
-              markerColor={MARKER_COLORS["foursquare"]}
+              markerColor={MARKER_COLORS["foursquareSuggestCompletion"]}
             />
           </div>
           <div className="column col-5 text-center">
             <Search 
-              title="Google Maps"
-              defaultUrl={GOOGLE_DEFAULT_URL}
+              title="Google Places Autocomplete"
+              defaultUrl={GOOGLE_DEFAULT_URLS['placesAutocomplete']}
               keyParams={GOOGLE_DEFAULT_KEY_PARAMS}
               shouldSubmitForm={this.state.shouldSubmitFormGoogle} 
               onResultsReceived={this.onGoogleSuccess} 
@@ -139,6 +164,23 @@ class App extends Component {
               limit={this.state.limit}
               isKeyInputDisabled={true}
               markerColor={MARKER_COLORS["placesAutocomplete"]}
+            />
+          </div>
+        </div>
+        <div className="columns">
+          <div className="column col-1"></div>
+          <div className="column col-5 text-center">
+            <Search 
+              title="Foursquare Search"
+              defaultUrl={FOURSQUARE_DEFAULT_URLS['search']}
+              keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
+              shouldSubmitForm={this.state.shouldSubmitFormFoursquareSearch} 
+              onResultsReceived={this.onFoursquareSearchSuccess} 
+              query={this.state.query}
+              latLng={this.state.latLng} 
+              radius={this.state.radius}
+              limit={this.state.limit}
+              markerColor={MARKER_COLORS["foursquareSearch"]}
             />
           </div>
         </div>

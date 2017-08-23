@@ -1,6 +1,6 @@
 import 'whatwg-fetch'
 
-function fetchFourSquareResults({ baseUrl, query, latLng, radius, limit, keyParams }, receiverFunc) {
+function fetchFourSquareSuggestCompletionResults({ baseUrl, query, latLng, radius, limit, keyParams }, receiverFunc) {
     let url = baseUrl
     url = url +"&query=" + query;
     if (latLng.length !== 0 && radius.length !== 0) {
@@ -18,7 +18,7 @@ function fetchFourSquareResults({ baseUrl, query, latLng, radius, limit, keyPara
     fetch(url)
         .then((response) => (response.json()))
         .then((json) => { 
-            let locations = json['response']['venues'].map((i) => (
+            let locations = json['response']['minivenues'].map((i) => (
                 {   
                     name: i.name, 
                     lat: i.location.lat, 
@@ -28,4 +28,4 @@ function fetchFourSquareResults({ baseUrl, query, latLng, radius, limit, keyPara
             receiverFunc(locations) })
 }
 
-export default fetchFourSquareResults;
+export default fetchFourSquareSuggestCompletionResults;
