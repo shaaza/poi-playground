@@ -27,7 +27,8 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
         }
 
         let suggestions = {};
-        let orderedSuggestionsByPlaceID = predictions.map((p) => (p['place_id']))
+        let orderedSuggestionsByPlaceID = predictions.filter((_, i) => (i < limit))
+                                                     .map((p) => (p['place_id']))
 
         predictions.forEach((prediction) => {
             suggestions[prediction['place_id']] = {
