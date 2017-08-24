@@ -23,6 +23,9 @@ class App extends Component {
         foursquareSearch: false,
         google: false 
       },
+      isShown: {
+        foursquareSearch: true,
+      },
       isSearching: false,
       markers: []
     } 
@@ -114,6 +117,43 @@ class App extends Component {
   }
 
   render() {
+    const foursquareSuggestCompletion = (<Search 
+              title="Foursquare Suggest Completion"
+              defaultUrl={FOURSQUARE_DEFAULT_URLS['suggestcompletion']}
+              keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
+              shouldSubmitForm={this.state.shouldSubmitFormFoursquareSuggestCompletion} 
+              onResultsReceived={this.onFoursquareSuggestCompletionSuccess} 
+              query={this.state.query}
+              latLng={this.state.latLng} 
+              radius={this.state.radius}
+              limit={this.state.limit}
+              markerColor={MARKER_COLORS["foursquareSuggestCompletion"]}
+            />);
+    const googlePlacesAutocomplete = (<Search 
+              title="Google Places Autocomplete"
+              defaultUrl={GOOGLE_DEFAULT_URLS['placesAutocomplete']}
+              keyParams={GOOGLE_DEFAULT_KEY_PARAMS}
+              shouldSubmitForm={this.state.shouldSubmitFormGoogle} 
+              onResultsReceived={this.onGoogleSuccess} 
+              query={this.state.query}
+              latLng={this.state.latLng}
+              radius={this.state.radius}
+              limit={this.state.limit}
+              isKeyInputDisabled={true}
+              markerColor={MARKER_COLORS["placesAutocomplete"]}
+            />);
+    const foursquareSearch = this.state.isShownFoursquareSearch ? (<Search 
+              title="Foursquare Search"
+              defaultUrl={FOURSQUARE_DEFAULT_URLS['search']}
+              keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
+              shouldSubmitForm={this.state.shouldSubmitFormFoursquareSearch} 
+              onResultsReceived={this.onFoursquareSearchSuccess} 
+              query={this.state.query}
+              latLng={this.state.latLng} 
+              radius={this.state.radius}
+              limit={this.state.limit}
+              markerColor={MARKER_COLORS["foursquareSearch"]}
+            />) : (<div></div>);
     return (
       <div className="container" >
         <SearchQuery
@@ -138,50 +178,33 @@ class App extends Component {
         <div className="columns">
           <div className="column col-1"></div>
           <div className="column col-5 text-center">
-            <Search 
-              title="Foursquare Suggest Completion"
-              defaultUrl={FOURSQUARE_DEFAULT_URLS['suggestcompletion']}
-              keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
-              shouldSubmitForm={this.state.shouldSubmitFormFoursquareSuggestCompletion} 
-              onResultsReceived={this.onFoursquareSuggestCompletionSuccess} 
-              query={this.state.query}
-              latLng={this.state.latLng} 
-              radius={this.state.radius}
-              limit={this.state.limit}
-              markerColor={MARKER_COLORS["foursquareSuggestCompletion"]}
-            />
+            {foursquareSuggestCompletion}
           </div>
           <div className="column col-5 text-center">
-            <Search 
-              title="Google Places Autocomplete"
-              defaultUrl={GOOGLE_DEFAULT_URLS['placesAutocomplete']}
-              keyParams={GOOGLE_DEFAULT_KEY_PARAMS}
-              shouldSubmitForm={this.state.shouldSubmitFormGoogle} 
-              onResultsReceived={this.onGoogleSuccess} 
-              query={this.state.query}
-              latLng={this.state.latLng}
-              radius={this.state.radius}
-              limit={this.state.limit}
-              isKeyInputDisabled={true}
-              markerColor={MARKER_COLORS["placesAutocomplete"]}
-            />
+            {googlePlacesAutocomplete}
           </div>
         </div>
         <div className="columns">
           <div className="column col-1"></div>
           <div className="column col-5 text-center">
-            <Search 
-              title="Foursquare Search"
-              defaultUrl={FOURSQUARE_DEFAULT_URLS['search']}
-              keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
-              shouldSubmitForm={this.state.shouldSubmitFormFoursquareSearch} 
-              onResultsReceived={this.onFoursquareSearchSuccess} 
-              query={this.state.query}
-              latLng={this.state.latLng} 
-              radius={this.state.radius}
-              limit={this.state.limit}
-              markerColor={MARKER_COLORS["foursquareSearch"]}
-            />
+            <div class="form-group">
+              <label class="form-switch">
+                <input 
+                  type="checkbox"
+                  checked={this.state.isShownFoursquareSearch} 
+                  onClick={() => {this.setState({
+                    isShownFoursquareSearch: !this.state.isShownFoursquareSearch,
+                    resultsReceived: {
+                      foursquareSearch: this.state.isShownFoursquareSearch,
+                      foursquareSuggestCompletion: this.state.foursquareSuggestCompletion,
+                      google: this.state.googlePlacesAutocomplete
+                    }
+                  })}}
+                 />
+                <i class="form-icon"></i>
+              </label>
+            </div>
+            {foursquareSearch}
           </div>
         </div>
         <br />
