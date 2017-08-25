@@ -23,9 +23,6 @@ class App extends Component {
         foursquareSearch: false,
         google: false 
       },
-      isShown: {
-        foursquareSearch: true,
-      },
       isSearching: false,
       markers: []
     } 
@@ -57,14 +54,24 @@ class App extends Component {
     });
   }
 
+  handleEnterKeypress = (event) => {
+    if (event.key === 'Enter')
+    this.setState({
+      markers: [],
+      shouldSubmitFormFoursquareSearch: true, 
+      shouldSubmitFormFoursquareSuggestCompletion: true, 
+      shouldSubmitFormGoogle: true,
+      isSearching: true 
+    });
+  }
+
   handleClearGMapsKeyButtonClick = (event) => {
     localStorage.removeItem('gmapsKey');
     window.location.reload();
   }
 
   resetSearchIfAllSuccess = () => {
-    let isAllResultsReceived = (this.state.resultsReceived.foursquareSearch && 
-                                this.state.resultsReceived.google && 
+    let isAllResultsReceived = (this.state.resultsReceived.google && 
                                 this.state.resultsReceived.foursquareSuggestCompletion)
     if (isAllResultsReceived) {
        this.setState({ 
@@ -142,20 +149,8 @@ class App extends Component {
               isKeyInputDisabled={true}
               markerColor={MARKER_COLORS["placesAutocomplete"]}
             />);
-    const foursquareSearch = this.state.isShownFoursquareSearch ? (<Search 
-              title="Foursquare Search"
-              defaultUrl={FOURSQUARE_DEFAULT_URLS['search']}
-              keyParams={FOURSQUARE_DEFAULT_KEY_PARAMS}
-              shouldSubmitForm={this.state.shouldSubmitFormFoursquareSearch} 
-              onResultsReceived={this.onFoursquareSearchSuccess} 
-              query={this.state.query}
-              latLng={this.state.latLng} 
-              radius={this.state.radius}
-              limit={this.state.limit}
-              markerColor={MARKER_COLORS["foursquareSearch"]}
-            />) : (<div></div>);
     return (
-      <div className="container" >
+      <div className="container" onKeyPress={this.handleEnterKeypress}>
         <SearchQuery
           query={this.state.query}
           latLng={this.state.latLng}
@@ -182,29 +177,6 @@ class App extends Component {
           </div>
           <div className="column col-5 text-center">
             {googlePlacesAutocomplete}
-          </div>
-        </div>
-        <div className="columns">
-          <div className="column col-1"></div>
-          <div className="column col-5 text-center">
-            <div class="form-group">
-              <label class="form-switch">
-                <input 
-                  type="checkbox"
-                  checked={this.state.isShownFoursquareSearch} 
-                  onClick={() => {this.setState({
-                    isShownFoursquareSearch: !this.state.isShownFoursquareSearch,
-                    resultsReceived: {
-                      foursquareSearch: this.state.isShownFoursquareSearch,
-                      foursquareSuggestCompletion: this.state.foursquareSuggestCompletion,
-                      google: this.state.googlePlacesAutocomplete
-                    }
-                  })}}
-                 />
-                <i class="form-icon"></i>
-              </label>
-            </div>
-            {foursquareSearch}
           </div>
         </div>
         <br />
