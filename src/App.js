@@ -180,19 +180,19 @@ class App extends Component {
         />
         <br />
         <div className="columns">
-          <div className="column col-1"></div>
-          <div className="column col-10">
+          <div className="column col-md-0 col-xs-0 col-1"></div>
+          <div className="column col-md-12 col-xs-12 col-10">
             <button className="btn" onClick={this.handleSearchButtonClick} disabled={this.state.isSearching}>Search</button>
             <button className="btn float-right" onClick={this.handleClearGMapsKeyButtonClick}>Clear Google Maps Key</button>
           </div>
         </div>
         <br />
         <div className="columns">
-          <div className="column col-1"></div>
-          <div className="column col-5 text-center">
+          <div className="column col-md-0 col-xs-0 col-1"></div>
+          <div className="column col-md-12 col-xs-12 col-5 text-center">
             {foursquareSuggestCompletion}
           </div>
-          <div className="column col-5 text-center">
+          <div className="column col-md-12 col-xs-12 col-5 text-center">
             {googlePlacesAutocomplete}
           </div>
         </div>
