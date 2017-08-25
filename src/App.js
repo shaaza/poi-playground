@@ -91,7 +91,7 @@ class App extends Component {
           lat: parseFloat(lat),
           lng: parseFloat(lng)
         }
-      })
+      }, () => { window.scrollTo(0, document.getElementById("google-map").getBoundingClientRect().bottom) })
     }
   }
 
