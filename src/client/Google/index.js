@@ -75,9 +75,9 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
 
     };
     
-    let queryParams = { input: query }
+    let queryParams = { input: query, strictBounds: true, language: "id" }
     if (lat.length !== 0 && lng.length !== 0 && radius.length !== 0) {
-        queryParams.location = new window.google.maps.LatLng(parseInt(lat, 10), parseInt(lng, 10));
+        queryParams.location = new window.google.maps.LatLng(parseFloat(lat), parseFloat(lng));
         queryParams.radius = parseInt(radius, 10);
     }
     if (limit.length !== 0) {
