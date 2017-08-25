@@ -15,6 +15,7 @@ class App extends Component {
       latLng: "-6.473381300000001,106.8307777",
       radius: "100000",
       limit: "5",
+      mapCenter: {lat: -6.243763299999999, lng: 106.80288310000003},
       shouldSubmitFormFoursquareSearch: false,
       shouldSubmitFormFoursquareSuggestCompletion: false, 
       shouldSubmitFormGoogle: false,
@@ -68,6 +69,20 @@ class App extends Component {
   handleClearGMapsKeyButtonClick = (event) => {
     localStorage.removeItem('gmapsKey');
     window.location.reload();
+  }
+
+  onClickSearchResult = (event) => {
+    let [lat, lng] = event.target.getAttribute("value").split(',');
+    if (lat === 'undefined' || lng === 'undefined') {
+      alert("Couldn't the find the coordinates for that location.");
+    } else {
+      this.setState({
+        mapCenter: {
+          lat: parseFloat(lat),
+          lng: parseFloat(lng)
+        }
+      })
+    }
   }
 
   resetSearchIfAllSuccess = () => {
@@ -135,6 +150,7 @@ class App extends Component {
               radius={this.state.radius}
               limit={this.state.limit}
               markerColor={MARKER_COLORS["foursquareSuggestCompletion"]}
+              onClickResult={this.onClickSearchResult}
             />);
     const googlePlacesAutocomplete = (<Search 
               title="Google Places Autocomplete"
@@ -148,6 +164,7 @@ class App extends Component {
               limit={this.state.limit}
               isKeyInputDisabled={true}
               markerColor={MARKER_COLORS["placesAutocomplete"]}
+              onClickResult={this.onClickSearchResult}
             />);
     return (
       <div className="container" onKeyPress={this.handleEnterKeypress}>
@@ -182,7 +199,7 @@ class App extends Component {
         <br />
         <div className="columns">
           <div className="column map-container" id="google-map">
-            <Map markers={this.state.markers} />
+            <Map markers={this.state.markers} center={this.state.mapCenter} />
           </div>
         </div>
       </div>

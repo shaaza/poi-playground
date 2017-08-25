@@ -5,7 +5,13 @@ import './index.css';
 function SearchResultList(props) {
     let list;
     if (props.locations) {
-         list = props.locations.map((l, i) => (<SearchResult rank={i+1} location={l} key={i} />))
+         list = props.locations.map((l, i) => (
+         <SearchResult
+            rank={i+1}
+            location={l}
+            key={i} 
+            onClickResult={props.onClickResult}
+        />))
     }
 
     return (

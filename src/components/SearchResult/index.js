@@ -5,7 +5,7 @@ function SearchResult(props) {
       <tr>
         <td className="small-width-column">{props.rank}</td>
         <td colSpan="5">
-            {props.location.name}
+            <a onClick={props.onClickResult} value={props.location.lat + ',' + props.location.lng}>{props.location.name}</a>
             <br/>
             <span className="text-overflow-ellipsis"><small>{props.location.address}{'\u00A0'}</small></span>
         </td>

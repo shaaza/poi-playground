@@ -70,7 +70,7 @@ class Search extends Component {
   render() {
     let searchResults;
     if (this.state.results.length !== 0) {
-      searchResults = (<SearchResultList locations={this.state.results} />);
+      searchResults = (<SearchResultList onClickResult={this.props.onClickResult} locations={this.state.results} />);
     } else {
       searchResults = "No results."
     }
