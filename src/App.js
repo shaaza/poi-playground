@@ -12,7 +12,7 @@ class App extends Component {
     super(props)
     this.state = {
       query: "",
-      latLng: "-6.473381300000001,106.8307777",
+      latLng: "-6.243763299999999,106.80288310000003",
       radius: "100000",
       limit: "5",
       mapCenter: {lat: -6.243763299999999, lng: 106.80288310000003},
@@ -69,6 +69,16 @@ class App extends Component {
   handleClearGMapsKeyButtonClick = (event) => {
     localStorage.removeItem('gmapsKey');
     window.location.reload();
+  }
+
+  handleRecenterMapButtonClick = (event) => {
+    let [lat, lng] = this.state.latLng.split(",");
+    this.setState({
+      mapCenter: {
+        lat: parseFloat(lat),
+        lng: parseFloat(lng)
+      }
+    })
   }
 
   onClickSearchResult = (event) => {
@@ -184,6 +194,7 @@ class App extends Component {
           <div className="column col-md-12 col-xs-12 col-10">
             <button className="btn" onClick={this.handleSearchButtonClick} disabled={this.state.isSearching}>Search</button>
             <button className="btn float-right" onClick={this.handleClearGMapsKeyButtonClick}>Clear Google Maps Key</button>
+            <button className="btn float-right" onClick={this.handleRecenterMapButtonClick}>Recenter Map</button>
           </div>
         </div>
         <br />
