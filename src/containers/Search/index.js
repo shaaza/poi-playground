@@ -87,6 +87,12 @@ class Search extends Component {
             onChange={this.handleKeyParamsChange}
             disabled={this.props.isKeyInputDisabled} 
           />
+          <div class="form-group">
+            <label class="form-switch">
+              <input type="checkbox" />
+              <i class="form-icon"></i> Full Search
+            </label>
+          </div>
           <span className="label" style={{background: this.props.markerColor, color: "white"}}>{this.props.markerColor}</span>
         </div>
         <br />
