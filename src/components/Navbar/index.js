@@ -1,14 +1,14 @@
 import React from 'react';
 
 function Navbar(props) {
-    const buttons = props.buttons.map((btn) => (
-        <a 
-          href="#" 
+    const buttons = props.buttons.map((btn, i) => (
+        <btn 
           className={"btn " + (props.active === btn.label ? "active" : "")}
           onClick={btn.onClick}
+          key={"nav-btn-" + i}
         >
             {btn.label}
-        </a>
+        </btn>
     ))
     return (
         <header className="navbar">

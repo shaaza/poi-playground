@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Geocoding from './containers/Geocoding';
+import FullSearch from './containers/FullSearch';
+
 import Navbar from './components/Navbar';
 
 class App extends Component {
@@ -25,7 +27,7 @@ class App extends Component {
       case "Autocomplete":
         return (<Geocoding />)
       case "Full Search":
-        return (<h1>Full text search</h1>)
+        return (<FullSearch />)
       case "Reverse Geocode":
         return (<h1>Reverse Geocode</h1>)
       default:
