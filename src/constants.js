@@ -8,7 +8,7 @@ export const FOURSQUARE_DEFAULT_KEY_PARAMS = "&client_id=ORIOILKCING2XM2BAE4RXLP
 export const GOOGLE_DEFAULT_URLS = {
     "placesAutocomplete": "https://maps.googleapis.com/maps/api/places/autocomplete",
     "fullTextSearch": "https://maps.googleapis.com/maps/api/place/textsearch",
-    "nearbyPlaces": "https://maps.googleapis.com/maps/api/place/nearbysearch",
+    "nearbyPlaces": "https://maps.googleapis.com/maps/api/place/nearbysearch?rankBy=DISTANCE&type=establishment",
     "reverseGeocode": "https://maps.googleapis.com/maps/api/geocode"
 }
 

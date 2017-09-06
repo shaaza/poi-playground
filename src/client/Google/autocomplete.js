@@ -1,6 +1,5 @@
-import getOrCreateDummyMapDOMElement from './util'
+import { getOrCreateDummyMapDOMElement } from './util'
 import googleMapLoader from './map_loader'
-// import googleMapLoader from 'google-map-react';
 
 var AUTOCOMPLETE_SERVICE = null;
 var PLACES_SERVICE = null;

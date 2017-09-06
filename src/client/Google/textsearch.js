@@ -1,4 +1,4 @@
-import getOrCreateDummyMapDOMElement from './util'
+import { getOrCreateDummyMapDOMElement } from './util'
 import googleMapLoader from './map_loader'
 // import googleMapLoader from 'google-map-react';
 
@@ -20,7 +20,7 @@ function fetchGoogleTextSearchResults({ baseUrl, latLng, query, radius, limit, k
         return;
     }
     let [lat, lng] = latLng.split(',')
-    function getResultsAndCallReceiver(predictions, status) {
+    function getResultsAndCallReceiver(results, status) {
         if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) { 
             receiverFunc([]);
             return;
@@ -31,11 +31,11 @@ function fetchGoogleTextSearchResults({ baseUrl, latLng, query, radius, limit, k
             return;
         }
 
-        let locations = predictions.slice(0, limit).map((prediction) => ({
-            name: prediction['name'],
-            address: prediction['formatted_address'],
-            lat: prediction.geometry.location.lat(),
-            lng: prediction.geometry.location.lng()
+        let locations = results.slice(0, limit).map((result) => ({
+            name: result['name'],
+            address: result['formatted_address'],
+            lat: result.geometry.location.lat(),
+            lng: result.geometry.location.lng()
         }
         ));
 

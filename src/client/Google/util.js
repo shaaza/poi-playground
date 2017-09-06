@@ -10,4 +10,18 @@ function getOrCreateDummyMapDOMElement(id) {
     return dummyElement
 }
 
-export default getOrCreateDummyMapDOMElement;
+function parseQueryParams(url) {
+    let qstr = url.slice(url.indexOf('?') + 1)
+    let query = {};
+    let a = (qstr[0] === '?' ? qstr.substr(1) : qstr).split('&');
+    for (let i = 0; i < a.length; i++) {
+        let b = a[i].split('=');
+        query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+    }
+    return query;
+}
+
+export {
+    getOrCreateDummyMapDOMElement, 
+    parseQueryParams
+}

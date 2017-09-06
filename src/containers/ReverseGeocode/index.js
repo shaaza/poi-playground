@@ -10,9 +10,9 @@ class ReverseGeocode extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      query: "",
-      latLng: "-6.243763299999999,106.80288310000003",
-      radius: "100000",
+      query: "-6.243763299999999,106.80288310000003",
+      latLng: "-",
+      radius: "1",
       limit: "5",
       mapCenter: {lat: -6.243763299999999, lng: 106.80288310000003},
       shouldSubmitFormGoogleNearbyPlaces: false, 
@@ -163,6 +163,14 @@ class ReverseGeocode extends Component {
           onRadiusChange={this.handleRadiusChange}
           onLimitChange={this.handleLimitChange} 
         />
+        <div className="columns">
+          <div className="column col-1"></div>
+          <div className="column col-10">
+            <small className="container">
+              Note: Current lat/lng is irrelevant for Nearby Places. Also rankBy=DISTANCE requires type param, and rankBy=PROMINENCE requires radius param. If there's no rankBy param, the radius value must be set.
+            </small>
+          </div>
+        </div>
         <br />
         <div className="columns">
           <div className="column col-md-0 col-xs-0 col-1"></div>
