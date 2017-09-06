@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Geocoding from './containers/Geocoding';
 import FullSearch from './containers/FullSearch';
+import ReverseGeocode from './containers/ReverseGeocode';
 
 import Navbar from './components/Navbar';
 
@@ -29,7 +30,7 @@ class App extends Component {
       case "Full Search":
         return (<FullSearch />)
       case "Reverse Geocode":
-        return (<h1>Reverse Geocode</h1>)
+        return (<ReverseGeocode />)
       default:
         return (<div></div>)
     }

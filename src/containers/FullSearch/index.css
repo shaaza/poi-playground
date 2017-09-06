@@ -1,0 +1,30 @@
+.main-panel {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.search-panel {
+  width: 100%
+}
+
+.map-container {
+  position:absolute;
+  width: 100%;
+  height: 400px;
+  left: 50%;
+  margin-left: -50%;
+  margin-bottom: 50px;
+}
+
+.footer {
+  position: absolute;
+  height: 100px;
+}
+
+.offset-columns-left {
+  margin-left: auto;
+}
+
+.offset-columns-right {
+  margin-right: auto;
+}
