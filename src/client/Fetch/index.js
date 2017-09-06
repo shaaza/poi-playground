@@ -3,6 +3,7 @@ import fetchFourSquareSuggestCompletionResults from '../Foursquare/suggestcomple
 import fetchGoogleAutocompleteResults from '../Google/autocomplete.js';
 import fetchGoogleTextSearchResults from '../Google/textsearch.js';
 import fetchGoogleNearbySearchResults from '../Google/nearbysearch.js';
+import fetchGoogleReverseGeocodeResults from '../Google/reversegeocode.js';
 
 
 function fetchResults(queryDetails, receiverFunc) {
@@ -18,6 +19,8 @@ function fetchResults(queryDetails, receiverFunc) {
             return fetchGoogleTextSearchResults(queryDetails, receiverFunc)
         case baseURL.includes("google") && baseURL.includes("nearbysearch"):
             return fetchGoogleNearbySearchResults(queryDetails, receiverFunc)
+        case baseURL.includes("google") && baseURL.includes("geocode"):
+            return fetchGoogleReverseGeocodeResults(queryDetails, receiverFunc)
         default:
             alert("No endpoint configured for that query!")
             return null;

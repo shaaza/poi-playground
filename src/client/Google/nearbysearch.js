@@ -21,7 +21,7 @@ function fetchGoogleNearbySearchResults({ baseUrl, latLng, query, radius, limit,
     let [lat, lng] = query.split(',')
     let urlQueryParams = parseQueryParams(baseUrl);
 
-    function getResultsAndCallReceiver(predictions, status) {
+    function getResultsAndCallReceiver(results, status) {
         if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) { 
             receiverFunc([]);
             return;
@@ -32,11 +32,11 @@ function fetchGoogleNearbySearchResults({ baseUrl, latLng, query, radius, limit,
             return;
         }
 
-        let locations = predictions.slice(0, limit).map((prediction) => ({
-            name: prediction['name'],
+        let locations = results.slice(0, limit).map((result) => ({
+            name: result['name'],
             address: "",
-            lat: prediction.geometry.location.lat(),
-            lng: prediction.geometry.location.lng()
+            lat: result.geometry.location.lat(),
+            lng: result.geometry.location.lng()
         }
         ));
 
@@ -74,7 +74,6 @@ function fetchGoogleNearbySearchResults({ baseUrl, latLng, query, radius, limit,
         return
     }
         
-    console.log(urlQueryParams)
     if (urlQueryParams.rankBy && urlQueryParams.rankBy === "DISTANCE") {
             queryParams.rankBy = window.google.maps.places.RankBy.DISTANCE
             queryParams.type = [urlQueryParams.type]
