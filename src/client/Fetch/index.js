@@ -1,6 +1,8 @@
 import fetchFourSquareSearchResults from '../Foursquare/search.js';
 import fetchFourSquareSuggestCompletionResults from '../Foursquare/suggestcompletion.js';
-import fetchGoogleResults from '../Google/index.js';
+import fetchGoogleAutocompleteResults from '../Google/autocomplete.js';
+import fetchGoogleTextSearchResults from '../Google/textsearch.js';
+
 
 function fetchResults(queryDetails, receiverFunc) {
     let baseURL = queryDetails['baseUrl']
@@ -9,9 +11,12 @@ function fetchResults(queryDetails, receiverFunc) {
             return fetchFourSquareSuggestCompletionResults(queryDetails, receiverFunc);
         case (baseURL.includes("foursquare") && baseURL.includes("search")):
             return fetchFourSquareSearchResults(queryDetails, receiverFunc);
-        case baseURL.includes("google"):
-            return fetchGoogleResults(queryDetails, receiverFunc)
+        case baseURL.includes("google") && baseURL.includes("autocomplete"):
+            return fetchGoogleAutocompleteResults(queryDetails, receiverFunc)
+        case baseURL.includes("google") && baseURL.includes("textsearch"):
+            return fetchGoogleTextSearchResults(queryDetails, receiverFunc)
         default:
+            alert("No endpoint configured for that query!")
             return null;
     }
 }

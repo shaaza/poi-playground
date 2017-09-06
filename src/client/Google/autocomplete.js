@@ -14,7 +14,7 @@ if (AUTOCOMPLETE_SERVICE === null && PLACES_SERVICE === null) {
         })
 }
 
-function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }, receiverFunc) {
+function fetchGoogleAutocompleteResults({ baseUrl, latLng, query, radius, limit, keyParams }, receiverFunc) {
     if (AUTOCOMPLETE_SERVICE === null || PLACES_SERVICE === null) {
         alert("Google maps not loaded!")
         return;
@@ -75,16 +75,14 @@ function fetchGoogleResults({ baseUrl, latLng, query, radius, limit, keyParams }
 
     };
     
-    let queryParams = { input: query, strictBounds: true, language: "id" }
+    let queryParams = { input: query, language: "id", componentRestrictions: { country: "id" } }
     if (lat.length !== 0 && lng.length !== 0 && radius.length !== 0) {
         queryParams.location = new window.google.maps.LatLng(parseFloat(lat), parseFloat(lng));
         queryParams.radius = parseInt(radius, 10);
     }
-    if (limit.length !== 0) {
-        queryParams.limit = parseInt(limit, 10)
-    }
+
         AUTOCOMPLETE_SERVICE.getPlacePredictions(queryParams, getDetailsAndCallReceiver);
 }
 
 
-export default fetchGoogleResults;
+export default fetchGoogleAutocompleteResults;
