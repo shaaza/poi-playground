@@ -1,14 +1,15 @@
 import React from 'react';
+import './index.css'
 
 function Navbar(props) {
     const buttons = props.buttons.map((btn, i) => (
-      <btn 
-        className={"btn " + (props.active === btn.label ? "active" : "")}
+      <button 
+        className={"horizontal-margins btn " + (props.active === btn.label ? "active" : "")}
         onClick={btn.onClick}
         key={"nav-btn-" + i}
       >
         {btn.label}
-      </btn>
+      </button>
     ))
     return (
         <header className="navbar">
