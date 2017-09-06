@@ -65,11 +65,6 @@ class Geocoding extends Component {
     });
   }
 
-  handleClearGMapsKeyButtonClick = (event) => {
-    localStorage.removeItem('gmapsKey');
-    window.location.reload();
-  }
-
   handleRecenterMapButtonClick = (event) => {
     let [lat, lng] = this.state.latLng.split(",");
     this.setState({
@@ -192,7 +187,6 @@ class Geocoding extends Component {
           <div className="column col-md-0 col-xs-0 col-1"></div>
           <div className="column col-md-12 col-xs-12 col-10">
             <button className="btn" onClick={this.handleSearchButtonClick} disabled={this.state.isSearching}>Search</button>
-            <button className="btn float-right" onClick={this.handleClearGMapsKeyButtonClick}>Clear Google Maps Key</button>
             <button className="btn float-right" onClick={this.handleRecenterMapButtonClick}>Recenter Map</button>
           </div>
         </div>
