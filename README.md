@@ -33,6 +33,11 @@ Runs tests.
 
 ## Supported APIs
 * [Google Places Autocomplete](https://developers.google.com/places/web-service/autocomplete)* with [Place Details](https://developers.google.com/places/web-service/details)
-* [Foursquare Venues](https://developer.foursquare.com/docs/venues/venues)
+* [Foursquare Venues Suggest Completion](https://developer.foursquare.com/docs/venues/venues)
+* [Foursquare Venues Search](https://developer.foursquare.com/docs/venues/venues)
+* [Google Text Search](https://developers.google.com/places/web-service/search#TextSearchRequests)
+* [Google Nearby Search](https://developers.google.com/places/web-service/search#PlaceSearchRequests)
+* [Google Reverse Geocoding](https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding)
+
 
 *Note: Google Places APIs are implemented using the JavaScript API Client due to lack of CORS support using the Web APIs.
