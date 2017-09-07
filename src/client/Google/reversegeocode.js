@@ -31,7 +31,7 @@ function fetchGoogleReverseGeocodeResults({ baseUrl, query, limit }, receiverFun
         }
 
         let locations = results.slice(0, limit).map((result) => ({
-            name: result['name'],
+            name: "Location",
             address: result['formatted_address'],
             lat: result.geometry.location.lat(),
             lng: result.geometry.location.lng()

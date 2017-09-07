@@ -11,7 +11,7 @@ function SearchQuery(props) {
                 <TextInput 
                   className="column col-4"
                   id="latLng"
-                  label="Current LatLng:"
+                  label="Current LatLng / Map Center:"
                   value={props.latLng} onChange={props.onLatLngChange}
                 />    
                 <TextInput

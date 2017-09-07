@@ -11,7 +11,7 @@ class ReverseGeocode extends Component {
     super(props)
     this.state = {
       query: "-6.243763299999999,106.80288310000003",
-      latLng: "-",
+      latLng: "-6.243763299999999,106.80288310000003",
       radius: "1",
       limit: "5",
       mapCenter: {lat: -6.243763299999999, lng: 106.80288310000003},
@@ -43,22 +43,29 @@ class ReverseGeocode extends Component {
   }
 
   handleSearchButtonClick = (event) => {
+    let [lat, lng] = this.state.query.split(',');
+    let center = {lat: parseFloat(lat), lng: parseFloat(lng)};
     this.setState({
       markers: [],
       shouldSubmitFormGoogleNearbyPlaces: true, 
       shouldSubmitFormGoogleReverseGeocode: true,
-      isSearching: true 
+      isSearching: true,
+      mapCenter: center 
     });
   }
 
   handleEnterKeypress = (event) => {
-    if (event.key === 'Enter')
-    this.setState({
-      markers: [],
-      shouldSubmitFormGoogleNearbyPlaces: true, 
-      shouldSubmitFormGoogleReverseGeocode: true,
-      isSearching: true 
-    });
+    if (event.key === 'Enter') {
+      let [lat, lng] = this.state.query.split(',');
+      let center = {lat: parseFloat(lat), lng: parseFloat(lng)};
+      this.setState({
+        markers: [],
+        shouldSubmitFormGoogleNearbyPlaces: true, 
+        shouldSubmitFormGoogleReverseGeocode: true,
+        isSearching: true,
+        mapCenter: center  
+      });
+    }
   }
 
   handleRecenterMapButtonClick = (event) => {
@@ -68,7 +75,7 @@ class ReverseGeocode extends Component {
         lat: parseFloat(lat),
         lng: parseFloat(lng)
       }
-    })
+    }, () => { window.scrollTo(0, document.getElementById("google-map").getBoundingClientRect().bottom); })
   }
 
   onClickSearchResult = (event) => {
