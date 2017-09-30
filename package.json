@@ -2,12 +2,13 @@
   "name": "compare-search-apis",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://transport.pages.golabs.io/poi-playground",
+  "homepage": "http://transport.pages.golabs.io/poi-playground",
   "dependencies": {
     "google-map-react": "^0.24.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.11",
+    "scriptjs": "^2.5.8",
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
